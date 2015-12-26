@@ -11,12 +11,14 @@
 
     $row = 0;
     $col = 0;
-    $target_row = 3010 * 2 - 1;// grid gets filled diagonally, so the value we need
-    $target_col = 3019 * 2 - 1;// isn't present until grid is twice larger, minus one
+    $target_row = 3010 - 1;// array is zero based
+    $target_col = 3019 - 1;
+    $max_row = 3019 * 2;// grid gets filled diagonally, so the value we need
+    $max_col = 3019 * 2;// isn't present until grid is twice larger
 
     function formula($n){ return ($n * 252533) % 33554393; }
 
-    while ($row <= $target_row && $col <= $target_col)
+    while ($row <= $max_row && $col <= $max_col)
     {
         if(!isset($grid[$row][$col]))// skip existing values
         {
@@ -44,9 +46,8 @@
         {
             $row--;
             $col++;
-        }//var_dump($row, $col, '-------');
+        }
     }
-    var_dump("---------");
-    //var_dump($grid);
+
     var_dump($grid[$target_row][$target_col]);
         
