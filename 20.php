@@ -1,21 +1,35 @@
 <?php
 
-    $i=1;
-    $current = 10;
-    $max = 29000000;
+	$house=1;
+    $max = 29000000 / 10;
 
-    while ($current <= $max)
+    function find_divisors($num)
     {
-        $new = 0;
+        $max = $num / 2;// twice faster
+        $divisors = array($num);// but we have to add one manually
 
-        for($k=1; $k<=$i; $k++)
+        for($i = 1; $i <= $max; $i ++)
         {
-            if($i % $k == 0){ $new += $k * 10; }
+            if($num % $i == 0)
+            {
+                $divisors[] = $i;
+            }
         }
-
-        $current = $new;
-        $i++;
+        return $divisors;
     }
 
+    $time_start = microtime(true);
+
+    do 
+    {
+        $current = array_sum(find_divisors($house));
+        //var_dump($current);print "<br/>";
+        $house++;
+
+    }
+    while($current <= $max);
+    
+    print "<br/><br/>time: ";
+    $time_end = microtime(true);print $time_end - $time_start."<br/><br/>";
     var_dump($current);
-    var_dump($i);
+    var_dump($house);
