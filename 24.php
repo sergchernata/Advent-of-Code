@@ -1,6 +1,6 @@
 <?php
 
-        $input = "1
+                $input = "1
 3
 5
 11
@@ -29,39 +29,55 @@
 109
 113";
         
-    $packages = explode("\n", $input);
-    $balance = false;
+        $packages = explode("\n", $input);
+        $balance = false;
+        $quantums = array();
+        $lowest = false;
 
-    while(!$balance || $sum_of_all == 0)
-    {
-        $comp1 = array();
-        $comp2 = array();
-        $comp3 = array();
-
-        rsort($packages);
-        //shuffle($packages);
-
-        foreach ($packages as $p)
+        function run($packages, $balance)
         {
-            $rand = rand(1,3);
-            $rand_comp = &${'comp'.$rand};
-            array_push($rand_comp, $p);
+            $d = [];
+
+            while(!$balance || $sum_of_all == 0)
+            {
+                $comp1 = array();
+                $comp2 = array();
+                $comp3 = array();
+
+                rsort($packages);
+                //shuffle($packages);
+
+                foreach ($packages as $p)
+                {
+                    $rand = rand(1,3);
+                    $rand_comp = &${'comp'.$rand};
+                    array_push($rand_comp, $p);
+                }
+
+                $sum_of_all = array_sum($comp1) + array_sum($comp2) + array_sum($comp3);
+                $balance = array_sum($comp1) == array_sum($comp2) && array_sum($comp2) == array_sum($comp3);
+            }
+
+            return $d = [$comp1, $comp2, $comp3];
         }
 
-        $sum_of_all = array_sum($comp1) + array_sum($comp2) + array_sum($comp3);
-        $balance = array_sum($comp1) == array_sum($comp2) && array_sum($comp2) == array_sum($comp3);
-    }
-
-    function quantum($packages)
-    {
-        $packages['quantum'] = 1;
-
-        foreach ($packages as $p)
+        function quantum($packages)
         {
-            $packages['quantum'] *= $p;
+            $packages['quantum'] = 1;
+
+            foreach ($packages as $p)
+            {
+                $packages['quantum'] *= $p;
+            }
+
+            return $packages['quantum'];
         }
 
-        return $packages;
-    }
+        for($i=0; $i<200; $i++)
+        {
+            $result = run($packages, $balance);
+            $quantums = [quantum($result[0]), quantum($result[1]), quantum($result[2])];
+            if(!$lowest || min($quantums) < $lowest){ $lowest = min($quantums); }
+        }
 
-    var_dump(quantum($comp1), quantum($comp2), quantum($comp3));
+        print $lowest;
