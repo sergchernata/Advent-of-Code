@@ -11,9 +11,9 @@ for string in input:
     if pattern.match(string) is not None:
         part1 += 1
 
-    # pattern = re.compile(r"(?=.*(.)\1{1,}.*)(?!.*(ab|cd|pq|xy).*)(?:(.*[aeiou].*){3,})")
+    pattern = re.compile(r"(?=.*(.).\1.*)(?:.*(\w{2}).*(\2).*)")
 
-    # if pattern.match(string) is not None:
-    #     part2 += 1
+    if pattern.match(string) is not None:
+        part2 += 1
 
 print(part1, part2)
