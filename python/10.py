@@ -1,26 +1,28 @@
-input = '1321131112'
+def look_and_say(repeat):
 
-def look_and_say(input):
-	output = ''
-	char = input[0]
-	count = 1
-	input = input[1:]
-	cursor = 0
+	input = '1321131112'
 
-	for x in input:
-		if char != x:
-			output += str(count) + char
-			char = x
-			count = 1
-			if cursor == len(input)-1: output += str(count) + char
-		else:
-			count += 1
+	for _ in range(repeat):
+		output = ''
+		char = input[0]
+		count = 1
+		input = input[1:]
+		cursor = 0
 
-		cursor += 1
+		for x in input:
+			if char != x:
+				output += str(count) + char
+				char = x
+				count = 1
+				if cursor == len(input)-1: output += str(count) + char
+			else:
+				count += 1
 
-	return output
+			cursor += 1
 
-for _ in range(40):
-	input = look_and_say(input)
+		input = output
 
-print(len(input))
+	return len(input)
+
+
+print(look_and_say(40),look_and_say(50))
