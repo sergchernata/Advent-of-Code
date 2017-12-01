@@ -12,7 +12,7 @@ func main() {
 
 	sum := 0
 	var numbers []int
-	var next, current int
+	var next, current, total int
 
 	// split input
 	input := strings.Split(input, "")
@@ -23,10 +23,12 @@ func main() {
 		numbers = append(numbers, number)
 	}
 
+	total = len(numbers)
+
 	// process input
 	for pos, num := range numbers {
 
-		if pos == len(numbers)-1 {
+		if pos == total-1 {
 			next = numbers[0]
 		} else {
 			next = numbers[pos+1]
