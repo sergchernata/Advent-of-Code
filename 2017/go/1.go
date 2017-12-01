@@ -28,10 +28,18 @@ func main() {
 	// process input
 	for pos, num := range numbers {
 
-		if pos == total-1 {
-			next = numbers[0]
+		// part A
+		// if pos == total-1 {
+		// 	next = numbers[0]
+		// } else {
+		// 	next = numbers[pos+1]
+		// }
+
+		// part B
+		if pos+total/2 >= total {
+			next = numbers[-1*(total-(pos+total/2))]
 		} else {
-			next = numbers[pos+1]
+			next = numbers[pos+total/2]
 		}
 
 		current = num
