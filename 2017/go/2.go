@@ -27,19 +27,14 @@ func main() {
 	// convert input
 	for _, v := range lines {
 
-		var digits []int
-
 		// split into individual characters
 		characters := strings.Split(v, "")
 
-		// convert characters into digits
-		for c := range characters {
-			digit, _ := strconv.Atoi(characters[c])
-			digits = append(digits, digit)
-		}
+		sort.Strings(characters)
+		lowest, _ := strconv.Atoi(characters[0])
+		highest, _ := strconv.Atoi(characters[len(characters)-1])
 
-		sort.Ints(digits)
-		checksum += digits[len(digits)-1] - digits[0]
+		checksum += highest - lowest
 
 	}
 
