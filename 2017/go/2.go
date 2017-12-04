@@ -14,6 +14,21 @@ func check(e error) {
 	}
 }
 
+func find_difference(numbers []int) int {
+	// start with the highest number
+	for i := len(numbers) - 1; i >= 0; i-- {
+		//divided by the lowest
+		for _, v := range numbers {
+			// make sure we don't divide a number by itself
+			// giving a false positive
+			if (numbers[i] != v) && numbers[i]%v == 0 {
+				return numbers[i] / v
+			}
+		}
+	}
+	return 0
+}
+
 func main() {
 
 	var checksum = 0
@@ -39,7 +54,11 @@ func main() {
 
 		sort.Ints(numbers)
 
-		checksum += numbers[len(numbers)-1] - numbers[0]
+		// part A
+		//checksum += numbers[len(numbers)-1] - numbers[0]
+
+		// part B
+		checksum += find_difference(numbers)
 
 	}
 
