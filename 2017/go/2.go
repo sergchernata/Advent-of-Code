@@ -22,19 +22,24 @@ func main() {
 	check(err)
 
 	// split input
-	lines := strings.Split(string(dat), "\t")
+	lines := strings.Split(string(dat), "\n")
 
 	// convert input
-	for _, v := range lines {
+	for _, line := range lines {
+
+		var numbers []int
 
 		// split into individual characters
-		characters := strings.Split(v, "")
+		number_strings := strings.Split(line, "\t")
 
-		sort.Strings(characters)
-		lowest, _ := strconv.Atoi(characters[0])
-		highest, _ := strconv.Atoi(characters[len(characters)-1])
+		for _, v := range number_strings {
+			converted, _ := strconv.Atoi(v)
+			numbers = append(numbers, converted)
+		}
 
-		checksum += highest - lowest
+		sort.Ints(numbers)
+
+		checksum += numbers[len(numbers)-1] - numbers[0]
 
 	}
 
