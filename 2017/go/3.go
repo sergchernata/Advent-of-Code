@@ -9,6 +9,25 @@ var input int = 277678
 
 func main() {
 
+	part_a()
+	part_b()
+
+}
+
+func part_b() {
+
+	var squares []int
+	var last = 0
+	var coil, side = 1
+
+	for last <= input {
+
+	}
+
+}
+
+func part_a() {
+
 	var steps = 0
 	var spirals int
 	var x_length, y_length int
@@ -34,6 +53,7 @@ func main() {
 	if input > bottom_right_corner {
 
 	} else {
+		
 		bottom_left_corner := bottom_right_corner - spirals
 		side_length := bottom_right_corner - bottom_left_corner
 		side_half := (side_length-1) / 2
@@ -50,10 +70,12 @@ func main() {
 			x_length = side_half - difference
 		}
 
-		fmt.Println(bottom_left_corner, difference, side_length, side_half, x_length, y_length)
+		// debug stuffs
+		//fmt.Println(bottom_left_corner, difference, side_length, side_half, x_length, y_length)
 	}
 
 	steps = x_length + y_length
 	
 	fmt.Println(steps)
+
 }
