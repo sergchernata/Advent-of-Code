@@ -93,7 +93,7 @@ func part_b() {
 		// golang returns 0 when trying to access a non-existing key
 		// thus, we can simply add all possibilities
 		if y ==  -1 * half_side && x == half_side { // begin a new coil
-			fmt.Println("bottom right corner, new coil")
+			
 			coil += 1
 			side_length += 2
 			sum = squares[x_dec + "," + y_inc] + squares[strconv.Itoa(x) + "," + y_inc]
@@ -102,7 +102,6 @@ func part_b() {
 			x += 1
 
 		} else if y < half_side && x ==  half_side { // side 1
-			fmt.Println("right side")
 
 			sum = squares[x_dec + "," + strconv.Itoa(y)] + squares[x_dec + "," + y_inc] + squares[x_dec + "," + y_dec]
 			
@@ -119,7 +118,7 @@ func part_b() {
 			y += 1
 		
 		} else if y == half_side && x == half_side { // top right corner
-			fmt.Println("top right corner")
+
 			sum = squares[x_dec + "," + y_dec]
 			squares[strconv.Itoa(x) + "," + strconv.Itoa(y)] = last + sum
 			last = squares[strconv.Itoa(x) + "," + strconv.Itoa(y)]
@@ -127,35 +126,35 @@ func part_b() {
 			
 
 		} else if y == half_side && x >  -1 * half_side { // side 2
-			fmt.Println("top side")
+
 			sum = squares[strconv.Itoa(x) + "," + y_dec] + squares[x_dec + "," + y_dec] + squares[x_inc + "," + y_dec]
 			squares[strconv.Itoa(x) + "," + strconv.Itoa(y)] = last + sum
 			last = squares[strconv.Itoa(x) + "," + strconv.Itoa(y)]
 			x -= 1
 
 		} else if y == half_side && x == -1 * half_side { // top left corner
-			fmt.Println("top left corner")
+
 			sum = squares[x_inc + "," + y_dec]
 			squares[strconv.Itoa(x) + "," + strconv.Itoa(y)] = last + sum
 			last = squares[strconv.Itoa(x) + "," + strconv.Itoa(y)]
 			y -= 1
 			
 		}else if x ==  -1 * half_side && y > -1 * half_side { // side 3
-			fmt.Println("left side")
+
 			sum = squares[x_inc+ "," + strconv.Itoa(y)] + squares[x_inc + "," + y_dec] + squares[x_inc + "," + y_inc]
 			squares[strconv.Itoa(x) + "," + strconv.Itoa(y)] = last + sum
 			last = squares[strconv.Itoa(x) + "," + strconv.Itoa(y)]
 			y -= 1
 
 		} else if y == -1 * half_side && x == -1 * half_side { // bottom left corner
-			fmt.Println("bottom left corner")
+
 			sum = squares[x_inc + "," + y_inc]
 			squares[strconv.Itoa(x) + "," + strconv.Itoa(y)] = last + sum
 			last = squares[strconv.Itoa(x) + "," + strconv.Itoa(y)]
 			x += 1
 			
 		} else if y ==  -1 * half_side && x < half_side { // side 4
-			fmt.Println("bottom side")
+
 			sum = squares[strconv.Itoa(x) + "," + y_inc] + squares[x_dec + "," + y_inc] + squares[x_inc + "," + y_inc]
 			squares[strconv.Itoa(x) + "," + strconv.Itoa(y)] = last + sum
 			last = squares[strconv.Itoa(x) + "," + strconv.Itoa(y)]
