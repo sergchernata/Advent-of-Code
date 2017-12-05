@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"strconv"
 )
 
 const input int = 277678
@@ -70,39 +71,99 @@ func part_a() {
 func part_b() {
 
 	var squares = make(map[string]int)
-	var last, coil, x, y = 0, 0, 0, 0
-	var side_length, half_side = 1, 1
+	var coil, x, y = 0, 0, 0
+	var side_length, half_side, last = 1, 1, 1
+	var x_dec, y_dec, x_inc, y_inc string
 	
 	squares["0,0"] = 1
 
-	last += 1
-
-	for last <= 25 /* input */ {
+	for last < input * 2 {
 
 		half_side = (side_length - 1) / 2
+		sum := 0
 
+		// we need to make these into strings for concatenation
+		x_dec = strconv.Itoa(x - 1)
+		y_dec = strconv.Itoa(y - 1)
+		x_inc = strconv.Itoa(x + 1)
+		y_inc = strconv.Itoa(y + 1)
+		
 		// counter clockwise, 
 		// from the position of 3 o'clock
+		// golang returns 0 when trying to access a non-existing key
+		// thus, we can simply add all possibilities
 		if y ==  -1 * half_side && x == half_side { // begin a new coil
+			fmt.Println("bottom right corner, new coil")
 			coil += 1
 			side_length += 2
+			sum = squares[x_dec + "," + y_inc] + squares[strconv.Itoa(x) + "," + y_inc]
+			squares[strconv.Itoa(x) + "," + strconv.Itoa(y)] = last + sum
+			last = squares[strconv.Itoa(x) + "," + strconv.Itoa(y)]
 			x += 1
+
 		} else if y < half_side && x ==  half_side { // side 1
-			fmt.Println("side 1")
+			fmt.Println("right side")
+
+			sum = squares[x_dec + "," + strconv.Itoa(y)] + squares[x_dec + "," + y_inc] + squares[x_dec + "," + y_dec]
+			
+			// on very first coil expansion "last" variable points
+			// to the same value as one of the potential parts of "sum"
+			// thus, we need to ignore that duplicate value
+			if squares[x_dec + "," + strconv.Itoa(y)] == last {
+				squares[strconv.Itoa(x) + "," + strconv.Itoa(y)] = sum
+			} else {
+				squares[strconv.Itoa(x) + "," + strconv.Itoa(y)] = last + sum
+			}
+			
+			last = squares[strconv.Itoa(x) + "," + strconv.Itoa(y)]
 			y += 1
-		} else if y == half_side && x >  -1 * half_side { // side 2
-			fmt.Println("side 2")
+		
+		} else if y == half_side && x == half_side { // top right corner
+			fmt.Println("top right corner")
+			sum = squares[x_dec + "," + y_dec]
+			squares[strconv.Itoa(x) + "," + strconv.Itoa(y)] = last + sum
+			last = squares[strconv.Itoa(x) + "," + strconv.Itoa(y)]
 			x -= 1
-		} else if x ==  -1 * half_side && y > -1 * half_side { // side 3
-			fmt.Println("side 3")
+			
+
+		} else if y == half_side && x >  -1 * half_side { // side 2
+			fmt.Println("top side")
+			sum = squares[strconv.Itoa(x) + "," + y_dec] + squares[x_dec + "," + y_dec] + squares[x_inc + "," + y_dec]
+			squares[strconv.Itoa(x) + "," + strconv.Itoa(y)] = last + sum
+			last = squares[strconv.Itoa(x) + "," + strconv.Itoa(y)]
+			x -= 1
+
+		} else if y == half_side && x == -1 * half_side { // top left corner
+			fmt.Println("top left corner")
+			sum = squares[x_inc + "," + y_dec]
+			squares[strconv.Itoa(x) + "," + strconv.Itoa(y)] = last + sum
+			last = squares[strconv.Itoa(x) + "," + strconv.Itoa(y)]
 			y -= 1
-		} else if y ==  -1 * half_side && x < half_side { // side 4
-			fmt.Println("side 4")
+			
+		}else if x ==  -1 * half_side && y > -1 * half_side { // side 3
+			fmt.Println("left side")
+			sum = squares[x_inc+ "," + strconv.Itoa(y)] + squares[x_inc + "," + y_dec] + squares[x_inc + "," + y_inc]
+			squares[strconv.Itoa(x) + "," + strconv.Itoa(y)] = last + sum
+			last = squares[strconv.Itoa(x) + "," + strconv.Itoa(y)]
+			y -= 1
+
+		} else if y == -1 * half_side && x == -1 * half_side { // bottom left corner
+			fmt.Println("bottom left corner")
+			sum = squares[x_inc + "," + y_inc]
+			squares[strconv.Itoa(x) + "," + strconv.Itoa(y)] = last + sum
+			last = squares[strconv.Itoa(x) + "," + strconv.Itoa(y)]
 			x += 1
+			
+		} else if y ==  -1 * half_side && x < half_side { // side 4
+			fmt.Println("bottom side")
+			sum = squares[strconv.Itoa(x) + "," + y_inc] + squares[x_dec + "," + y_inc] + squares[x_inc + "," + y_inc]
+			squares[strconv.Itoa(x) + "," + strconv.Itoa(y)] = last + sum
+			last = squares[strconv.Itoa(x) + "," + strconv.Itoa(y)]
+			x += 1
+
 		}
 
-		last += 1
-
-		fmt.Println(x, y, last)
 	}
+
+	fmt.Println(squares)
 }
