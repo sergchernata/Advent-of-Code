@@ -9,34 +9,8 @@ const input int = 277678
 
 func main() {
 
-	part_a()
+	//part_a()
 	part_b()
-
-}
-
-func part_b() {
-
-	squares = make(map[string]int)
-	last, coil, x, y = 0
-	side, current_coil, current_side, side_length = 1
-	squares["0,0"] = 1
-
-	for last <= input {
-
-		// add +1 to x
-
-
-		if y <  {
-
-		} else if {
-
-		} else { // begin a new coil
-			coil += 1
-			side_length += 2
-			x += 1
-		}
-
-	}
 
 }
 
@@ -91,4 +65,44 @@ func part_a() {
 
 	fmt.Println(steps)
 
+}
+
+func part_b() {
+
+	var squares = make(map[string]int)
+	var last, coil, x, y = 0, 0, 0, 0
+	var side_length, half_side = 1, 1
+	
+	squares["0,0"] = 1
+
+	last += 1
+
+	for last <= 25 /* input */ {
+
+		half_side = (side_length - 1) / 2
+
+		// counter clockwise, 
+		// from the position of 3 o'clock
+		if y ==  -1 * half_side && x == half_side { // begin a new coil
+			coil += 1
+			side_length += 2
+			x += 1
+		} else if y < half_side && x ==  half_side { // side 1
+			fmt.Println("side 1")
+			y += 1
+		} else if y == half_side && x >  -1 * half_side { // side 2
+			fmt.Println("side 2")
+			x -= 1
+		} else if x ==  -1 * half_side && y > -1 * half_side { // side 3
+			fmt.Println("side 3")
+			y -= 1
+		} else if y ==  -1 * half_side && x < half_side { // side 4
+			fmt.Println("side 4")
+			x += 1
+		}
+
+		last += 1
+
+		fmt.Println(x, y, last)
+	}
 }
