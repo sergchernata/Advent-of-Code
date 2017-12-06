@@ -21,6 +21,8 @@ func main() {
 	var last_config string
 	var converted []int
 	var length = 0
+	var first_encounter = ""
+	var first_encounter_cycle = 0
 
 	numbers := strings.Split(input, "\t")
 	length = len(numbers) - 1
@@ -76,12 +78,25 @@ func main() {
 
 		// check if new config has been seen before
 		if configs[last_config] {
-			break
+			// part A
+			// break
+			
+			// part B
+			if first_encounter == last_config {
+				break
+			}
+
+			if first_encounter == "" {
+				first_encounter = last_config
+				first_encounter_cycle = cycles
+			}
+
 		} else {
 			configs[last_config] = true
 		}
 
 	}
 
-	fmt.Println(cycles)
+	fmt.Println("A: ", first_encounter_cycle)
+	fmt.Println("B: ", cycles - first_encounter_cycle)
 }
