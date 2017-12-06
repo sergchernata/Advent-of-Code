@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"sort"
 	"strings"
 )
 
@@ -31,7 +32,10 @@ func main() {
 
 		// check for duplicates
 		for _, word := range words {
-			if encountered[word] == true {
+
+			word = SortString(word)
+			
+			if encountered[word] {
 				continue Pass
 			} else {
 				encountered[word] = true
@@ -42,4 +46,10 @@ func main() {
 	}
 
 	fmt.Println(valid)
+}
+
+func SortString(word string) string {
+    characters := strings.Split(word, "")
+    sort.Strings(characters)
+    return strings.Join(characters, "")
 }
