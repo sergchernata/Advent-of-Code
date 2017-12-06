@@ -28,13 +28,13 @@ func main() {
 
 		words := strings.Split(line, " ")
 		encountered := make(map[string]bool)
-		fmt.Println(words)
+
 		// check for duplicates
-		for _, w := range words {
-			if encountered[w] == true {
+		for _, word := range words {
+			if encountered[word] == true {
 				continue Pass
 			} else {
-				encountered[w] = true
+				encountered[word] = true
 			}
 		}
 
