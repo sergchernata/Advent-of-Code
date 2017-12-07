@@ -15,15 +15,15 @@ func check(e error) {
 
 func main() {
 
-	var tower = make(map[string][]string)
-	//var total = 0
+	// map[tower][child]true
+	var tower = make(map[string]map[string]bool)
+	var top string
 
 	dat, err := ioutil.ReadFile("7_input.txt")
 	check(err)
 
 	// split input
 	lines := strings.Split(string(dat), "\n")
-	//total = len(lines) - 1
 
 	// parse the data and format it
 	for _, v := range lines {
@@ -31,25 +31,34 @@ func main() {
 		if strings.Contains(v, " -> ") {
 
 			split := strings.Split(v, " -> ")
-			tower[strings.Split(split[0], " ")[0]] = strings.Split(split[1], ", ")
+			children := strings.Split(split[1], ", ")
+			parent := strings.Split(split[0], " ")[0]
+			tower[parent] = make(map[string]bool)
 
-		}
-
-	}
-
-	// find the unique key, not referred by anyone else
-	for program, _ := range tower {
-
-		for _, v := range tower {
-
-			if v[program] != "" {
-				delete(tower, program)
+			for _,c := range children {
+				tower[parent][c] = true
 			}
 
 		}
 
 	}
 
-	fmt.Println(tower)
+	// find the unique program, not referred by anyone else
+	Loop:
+	for program, _ := range tower {
+
+		for _, v := range tower {
+
+			if v[program] {
+				continue Loop
+			}
+
+		}
+
+		top = program
+
+	}
+
+	fmt.Println("A: ", top)
 
 }
