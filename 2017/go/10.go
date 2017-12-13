@@ -7,7 +7,10 @@ import (
 )
 
 var input string = "120,93,0,90,5,80,129,74,1,165,204,255,254,2,50,113"
-var list_size = 256
+var list_size = 255
+
+// var input string = "3,4,1,5"
+// var list_size = 5
 
 func check(e error) {
 	if e != nil {
@@ -15,37 +18,50 @@ func check(e error) {
 	}
 }
 
-func makeRange(min, max int) []int {
-    a := make([]int, max-min+1)
+func makeList(size int) []int {
+    a := make([]int, size+1)
     for i := range a {
-        a[i] = min + i
+        a[i] = i
     }
     return a
 }
 
-func reverseSlice(position, length, numbers) []int {
+func reverseSlice(position int, length int, numbers []int) []int {
 
-	new_numbers = numbers
+	new_numbers := make([]int, len(numbers))
+	copy(new_numbers, numbers)
+	size := list_size - 1
+	a := position
+	b := (position + length - 1) % size
 
-	for i := position; i < length; i++ {
+	for i := length; i > 0; i-- {
 
+		if a > size {
+			a = 0
+		}
 
+		if b < 0 {
+			b = size
+		}
+
+		new_numbers[a] = numbers[b]
+		new_numbers[b] = numbers[a]
+		a++
+		b--
 
 	}
 
-	return numbers
+	return new_numbers
 }
 
 func main() {
 
 	// split input
 	lengths := strings.Split(input, ",")
-	numbers := makeRange(0,255)
+	numbers := makeList(list_size)
 
-	//var registers = make(map[string]int)
 	var position = 0
 	var skip_size = 0
-
 
 	// parse the data and format it
 	for _, l := range lengths {
@@ -56,9 +72,14 @@ func main() {
 			numbers = reverseSlice(position, length, numbers)
 		}
 
-		position = length + skip_size
-		skip_size += 1
-
+		if position + length + skip_size < list_size - 1 {
+			position = position + length + skip_size
+		} else if position + length + skip_size > list_size - 1 {
+			position = (position + length + skip_size) % list_size
+		}
+fmt.Println(position, length, skip_size, list_size)
+		skip_size++
+//fmt.Println(numbers)
 	}
 
 	part_a := numbers[0] * numbers[1]
