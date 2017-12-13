@@ -6,7 +6,8 @@ import (
 	"strings"
 )
 
-var total = 0
+// start at 1 because "0" aka start is included by default
+var total = 1
 var programs = make(map[string][]string)
 var seen = make(map[string]bool)
 var start = "0"
@@ -37,6 +38,7 @@ func traverse(start string) {
 			for _, p := range v {
 				if !seen[p] {
 					seen[p] = true
+					fmt.Println(p)
 					traverse(p)
 				}
 			}
