@@ -48,23 +48,25 @@ func main() {
 
 		if _, exists := layers[i]; exists {
 
-			if i == 0 || scanner == 0 {
-
-				severity += i * layers[i]
-
-			}
-
-			
-
+			//fmt.Println(i, layers[i])
 			if i < layers[i] {
 				scanner = i
 			} else {
 				scanner = i % (layers[i] - 1)
 			}
+			
+			//fmt.Println(scanner)
+
+			if scanner == 0 {
+
+				fmt.Println("hit")
+				severity += i * layers[i]
+
+			}
 
 		}
 
-		fmt.Println(i, scanner)
+		//fmt.Println(i, scanner)
 		fmt.Println("----")
 
 	}
