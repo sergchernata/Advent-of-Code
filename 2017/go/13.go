@@ -20,6 +20,7 @@ func main() {
 	var layers = make(map[int]int)
 	var highest = 0
 	var scanner = 0
+	var delay = 0 
 
 	dat, err := ioutil.ReadFile("13_input.txt")
 	check(err)
@@ -41,36 +42,46 @@ func main() {
 
 	}
 
+	// find the smallest possible delay
+	// that gets us across without increasing severity
+	for true {
+		temp := traverse(layers, highest, delay, scanner)
+		fmt.Println(delay)
+		if temp == 0 {
+			break
+		}
+		delay++
+	}
+
+	severity = traverse(layers, highest, 0, scanner)
+
+	fmt.Println(delay)
+	fmt.Println(severity)
+
+}
+
+func traverse(layers map[int]int, highest int, delay int, scanner int) int {
+
+	var severity = 0
 
 	for i := 0; i <= highest; i++ {
 
-		fmt.Println(i, scanner)
+		if _, exists := layers[i-delay]; exists {
 
-		if _, exists := layers[i]; exists {
-
-			//fmt.Println(i, layers[i])
-			if i < layers[i] {
+			if i < layers[i-delay] {
 				scanner = i
 			} else {
-				scanner = i % (layers[i] - 1)
+				scanner = i % (layers[i-delay] - 1)
 			}
 			
-			//fmt.Println(scanner)
-
 			if scanner == 0 {
-
-				fmt.Println("hit")
-				severity += i * layers[i]
-
+				severity += i * layers[i-delay]
 			}
 
 		}
 
-		//fmt.Println(i, scanner)
-		fmt.Println("----")
-
 	}
 
-	fmt.Println(severity)
+	return severity
 
 }
