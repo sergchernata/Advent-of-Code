@@ -12,8 +12,9 @@ func main() {
 	var position = 0
 	var value = 1
 	var steps = []int{0}
+	var insertions = 50000000//2018
 
-	for len(steps) < 2018 {
+	for len(steps) < insertions {
 
 		for i := 0; i < step; i++ {
 
@@ -25,7 +26,8 @@ func main() {
 
 		}
 
-		if len(steps) > 2016 {
+		// part a
+		if len(steps) == 2017 {
 			fmt.Println(steps[position+1])
 		}
 
@@ -35,7 +37,10 @@ func main() {
 		value++
 
 	}
-	
+
+	// part b
+	fmt.Println(steps[1])
+
 }
 
 func insert(original []int, position int, value int) []int {
