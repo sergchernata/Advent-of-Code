@@ -41,7 +41,7 @@ func main() {
 	check(err)
 
 	particles := strings.Split(string(dat), "\n")
-	loops := 1000000
+	loops := 10000000
 
 	for k,v := range particles {
 		parts := strings.Split(v, ", ")
@@ -70,7 +70,7 @@ func main() {
 			v["p"][1] += v["v"][1]
 			v["p"][2] += v["v"][2]
 
-			sum := abs(v["p"][0] + v["p"][1] + v["p"][2])
+			sum := abs(v["p"][0]) + abs(v["p"][1]) + abs(v["p"][2])
 
 			if sum < closest_distance || closest_distance == 0 {
 				closest_distance = sum
@@ -81,6 +81,7 @@ func main() {
 
 	}
 	// 400 too high
+	// 329 too low
 
 	fmt.Println(closest_particle)
 
