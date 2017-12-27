@@ -13,11 +13,11 @@ func check(e error) {
 	}
 }
 
-func str_to_int(strings []string) map[int]int {
+func str_to_int(digits []string) map[int]int {
 	var ints = make(map[int]int)
 
-	for k,v := range strings {
-		converted, _ := strconv.Atoi(v)
+	for k,v := range digits {
+		converted, _ := strconv.Atoi(strings.Replace(v, " ", "", -1))
 		ints[k] = converted
 	}
 
@@ -41,7 +41,7 @@ func main() {
 	check(err)
 
 	particles := strings.Split(string(dat), "\n")
-	loops := 10000000
+	loops := 1000
 
 	for k,v := range particles {
 		parts := strings.Split(v, ", ")
@@ -60,17 +60,17 @@ func main() {
 
 	for i := 0; i < loops; i++ {
 
-		for k, v := range grid {
+		for k, _ := range grid {
 
-			v["v"][0] += v["a"][0]
-			v["v"][1] += v["a"][1]
-			v["v"][2] += v["a"][2]
+			grid[k]["v"][0] += grid[k]["a"][0]
+			grid[k]["v"][1] += grid[k]["a"][1]
+			grid[k]["v"][2] += grid[k]["a"][2]
 
-			v["p"][0] += v["v"][0]
-			v["p"][1] += v["v"][1]
-			v["p"][2] += v["v"][2]
+			grid[k]["p"][0] += grid[k]["v"][0]
+			grid[k]["p"][1] += grid[k]["v"][1]
+			grid[k]["p"][2] += grid[k]["v"][2]
 
-			sum := abs(v["p"][0]) + abs(v["p"][1]) + abs(v["p"][2])
+			sum := abs(grid[k]["p"][0]) + abs(grid[k]["p"][1]) + abs(grid[k]["p"][2])
 
 			if sum < closest_distance || closest_distance == 0 {
 				closest_distance = sum
@@ -81,7 +81,7 @@ func main() {
 
 	}
 	// 400 too high
-	// 329 too low
+	// 329, 330 too low
 
 	fmt.Println(closest_particle)
 
