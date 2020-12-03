@@ -1,4 +1,4 @@
-defmodule Day1 do
+defmodule Day2 do
 	def part1(input) do
 		input
 		|> Enum.filter(fn [_, min, max, letter, password] ->
@@ -20,15 +20,15 @@ defmodule Day1 do
 
 	def load(file) do
 		case File.read(file) do
-		  {:ok, body} -> body 
-		  				 |> String.split("\n", trim: true)
-		  				 |> Enum.map(& Regex.run(~r/(\d+)-(\d+) ([a-z]): ([a-z]*)/, &1))
-		  {:error, _} -> IO.puts "Couldn't open the file."
+			{:ok, body} -> body 
+						   |> String.split("\n", trim: true)
+						   |> Enum.map(& Regex.run(~r/(\d+)-(\d+) ([a-z]): ([a-z]*)/, &1))
+			{:error, _} -> IO.puts "Couldn't open the file."
 		end
 	end
 end
 
-input = Day1.load("2.input.txt")
+input = Day2.load("2.input.txt")
 
-input |> Day1.part1 |> IO.inspect # 515
-input |> Day1.part2 |> IO.inspect # 711
+input |> Day2.part1 |> IO.inspect # 515
+input |> Day2.part2 |> IO.inspect # 711
