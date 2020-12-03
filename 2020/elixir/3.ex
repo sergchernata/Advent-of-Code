@@ -4,7 +4,7 @@ defmodule Day3 do
 	end
 
 	def part2(input) do
-		slopes = [ {1, 1}, {3, 1}, {5, 1}, {7, 1}, {1, 2} ]
+		[ {1, 1}, {3, 1}, {5, 1}, {7, 1}, {1, 2} ]
 		|> Enum.map(fn slope -> 
 			x_move = elem(slope, 0)
 			y_move = elem(slope, 1)
