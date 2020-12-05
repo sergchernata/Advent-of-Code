@@ -23,18 +23,16 @@ defmodule Day5 do
 				|> String.split("\n", trim: true)
 				|> Enum.map(fn line ->
 					{row_coords, col_coords} = String.split_at(line, 7)
-					row_coords = row_coords
+					
+					row = row_coords
 						|> String.codepoints()
 						|> Enum.map(& case &1 do "F" -> 0; "B" -> 1 end)
-					col_coords = col_coords
+						|> find(Enum.to_list(0..127))
+					col = col_coords
 						|> String.codepoints()
 						|> Enum.map(& case &1 do "L" -> 0; "R" -> 1 end)
+						|> find(Enum.to_list(0..7))
 
-					[row_coords, col_coords]
-				end)
-				|> Enum.map(fn [row_coords, col_coords] -> 
-					row = find(row_coords, Enum.to_list(0..127))
-					col = find(col_coords, Enum.to_list(0..7))
 					row * 8 + col
 				end)
 			{:error, _} -> IO.puts "Couldn't open the file."
