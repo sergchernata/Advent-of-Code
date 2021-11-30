@@ -88,4 +88,4 @@ end
 input = Day12.load("12.input.txt")
 
 input |> Day12.part1 |> IO.inspect # 1589
-input |> Day12.part2 |> IO.inspect # 
+input |> Day12.part2 |> IO.inspect # 23960

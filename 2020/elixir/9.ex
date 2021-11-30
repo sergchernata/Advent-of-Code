@@ -5,8 +5,8 @@ defmodule Day9 do
 
 	def part2(input) do
 		{start,amount} = find_sum_range(input, 0, 1, 167829540)
-		range = Enum.slice(input, start, amount)
-		Enum.min(range) + Enum.max(range)
+		{min,max} = Enum.slice(input, start, amount) |> Enum.min_max()
+		min + max
 	end
 
 	def find_first_invalid(input, index, tail_length) do
