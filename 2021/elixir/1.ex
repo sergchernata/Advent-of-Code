@@ -1,35 +1,26 @@
 defmodule Day1 do
   def part1(input) do
-    input |> compare_in_pairs()
+    for {current, index} <- Enum.with_index(input) do
+      if index + 1 < length(input) do
+        current < Enum.at(input, index + 1)
+      end
+    end
+    |> Enum.filter(& &1)
+    |> length
   end
 
   def part2(input) do
-    trios =
-      for {current, index} <- Enum.with_index(input) do
-        if index + 2 < length(input) do
-          second = Enum.at(input, index + 1)
-          third = Enum.at(input, index + 2)
+    for {current, index} <- Enum.with_index(input) do
+      if index + 3 < length(input) do
+        second = Enum.at(input, index + 1)
+        third = Enum.at(input, index + 2)
+        fourth = Enum.at(input, index + 3)
 
-          {current, second, third}
-        end
+        current + second + third < second + third + fourth
       end
-
-    trios
-    |> Enum.filter(&(&1 != nil))
-    |> Enum.map(fn {a, b, c} -> a + b + c end)
-    |> compare_in_pairs()
-  end
-
-  def compare_in_pairs(input) do
-    input
-    |> Enum.map(&[&1, &1])
-    |> List.flatten()
-    |> tl()
-    |> Enum.reverse()
-    |> tl()
-    |> Enum.reverse()
-    |> Enum.chunk_every(2)
-    |> Enum.reduce(0, fn [a, b], acc -> if a < b, do: acc + 1, else: acc end)
+    end
+    |> Enum.filter(& &1)
+    |> length
   end
 
   def load(file) do
