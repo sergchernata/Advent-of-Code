@@ -4,10 +4,10 @@ defmodule Day1 do
       [direction, amount] = String.split(line, " ", trim: true)
       amount = String.to_integer(amount)
 
-      case [direction, amount] do
-        ["forward", _] -> {position + amount, depth}
-        ["down", _] -> {position, depth + amount}
-        ["up", _] -> {position, depth - amount}
+      case direction do
+        "forward" -> {position + amount, depth}
+        "down" -> {position, depth + amount}
+        "up" -> {position, depth - amount}
       end
     end)
     |> Tuple.to_list()
@@ -19,10 +19,10 @@ defmodule Day1 do
       [direction, amount] = String.split(line, " ", trim: true)
       amount = String.to_integer(amount)
 
-      case [direction, amount] do
-        ["forward", _] -> {aim, position + amount, depth + aim * amount}
-        ["down", _] -> {aim + amount, position, depth}
-        ["up", _] -> {aim - amount, position, depth}
+      case direction do
+        "forward" -> {aim, position + amount, depth + aim * amount}
+        "down" -> {aim + amount, position, depth}
+        "up" -> {aim - amount, position, depth}
       end
     end)
     |> Tuple.to_list()
