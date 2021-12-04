@@ -1,4 +1,4 @@
-defmodule Day1 do
+defmodule Day do
   def part1(input) do
     for {current, index} <- Enum.with_index(input) do
       if index + 1 < length(input) do
@@ -31,9 +31,9 @@ defmodule Day1 do
   end
 end
 
-input = Day1.load("1.input.txt")
+input = Day.load("1.input.txt")
 
 # 1548
-input |> Day1.part1() |> IO.inspect()
+input |> Day.part1() |> IO.inspect()
 # 1589
-input |> Day1.part2() |> IO.inspect()
+input |> Day.part2() |> IO.inspect()

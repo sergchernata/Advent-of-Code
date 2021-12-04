@@ -1,4 +1,4 @@
-defmodule Day1 do
+defmodule Day do
   def part1(input) do
     for {char, index} <- hd(input) |> String.graphemes() |> Enum.with_index() do
       aggregate_by_index(input, index)
@@ -49,9 +49,9 @@ defmodule Day1 do
   end
 end
 
-input = Day1.load("3.input.txt")
+input = Day.load("3.input.txt")
 
 # 741950
-input |> Day1.part1() |> IO.inspect()
+input |> Day.part1() |> IO.inspect()
 # 903810
-input |> Day1.part2() |> IO.inspect()
+input |> Day.part2() |> IO.inspect()

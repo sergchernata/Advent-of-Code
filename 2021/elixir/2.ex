@@ -1,4 +1,4 @@
-defmodule Day1 do
+defmodule Day do
   def part1(input) do
     Enum.reduce(input, {0, 0}, fn line, {position, depth} ->
       [direction, amount] = String.split(line, " ", trim: true)
@@ -38,9 +38,9 @@ defmodule Day1 do
   end
 end
 
-input = Day1.load("2.input.txt")
+input = Day.load("2.input.txt")
 
 # 2272262
-input |> Day1.part1() |> IO.inspect()
+input |> Day.part1() |> IO.inspect()
 # 2134882034
-input |> Day1.part2() |> IO.inspect()
+input |> Day.part2() |> IO.inspect()

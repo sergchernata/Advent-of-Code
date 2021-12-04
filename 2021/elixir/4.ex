@@ -1,4 +1,4 @@
-defmodule Day1 do
+defmodule Day do
   def part1([numbers | boards]) do
     play_bingo(numbers, boards, false)
   end
@@ -57,7 +57,7 @@ defmodule Day1 do
     case Enum.sort(state, :desc) |> Enum.dedup() do
       [false] -> [false, updated_boards]
       [false | sums] -> [hd(sums), updated_boards]
-      [board_sum] -> [board_sum, []]
+      [board_sum] -> [board_sum, updated_boards]
     end
   end
 
@@ -84,9 +84,9 @@ defmodule Day1 do
   end
 end
 
-input = Day1.load("4.input.txt")
+input = Day.load("4.input.txt")
 
 # 31424
-input |> Day1.part1() |> IO.inspect()
+input |> Day.part1() |> IO.inspect()
 # 23042
-input |> Day1.part2() |> IO.inspect()
+input |> Day.part2() |> IO.inspect()
