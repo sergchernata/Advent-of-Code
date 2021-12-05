@@ -6,46 +6,45 @@ defmodule Day do
       end
     end)
     |> Enum.filter(&(&1 != nil))
-    |> frequency_more_than(2)
+    |> count_frequency_more_than(2)
   end
 
   def part2(lines) do
     Enum.map(lines, fn [[x1, y1], [x2, y2]] ->
       points = for x <- x1..x2, y <- y1..y2, do: {x, y}
 
-      if x1 == x2 or y1 == y2 do
-        points
-      else
-        dir = if y1 < y2, do: :down, else: :up
-        diagonalize(points, dir)
+      case x1 == x2 or y1 == y2 do
+        true -> points
+        false -> diagonalize(points, y1 < y2)
       end
     end)
     |> Enum.filter(&(length(&1) != 1))
-    |> frequency_more_than(2)
+    |> count_frequency_more_than(2)
   end
 
-  def frequency_more_than(lines, threshold) do
+  def count_frequency_more_than(lines, limit) do
     List.flatten(lines)
     |> Enum.frequencies()
-    |> Enum.filter(fn {_, c} -> c >= threshold end)
+    |> Map.values()
+    |> Enum.filter(&(&1 >= limit))
     |> length
   end
 
-  def diagonalize(points, dir, final \\ [])
+  def diagonalize(points, is_downward, final \\ [])
 
-  def diagonalize([], _dir, final), do: final
+  def diagonalize([], _is_downward, final), do: final
 
-  def diagonalize([point | points], dir, []), do: diagonalize(points, dir, [point])
+  def diagonalize([point | points], is_downward, []),
+    do: diagonalize(points, is_downward, [point])
 
-  def diagonalize([{x2, y2} | points], dir, final) do
+  def diagonalize([{x2, y2} | points], is_downward, final) do
     {x1, y1} = hd(final)
     is_single_step = abs(x1 - x2) == 1 && abs(y1 - y2) == 1
-
-    is_diagonal = x1 < x2 && ((dir == :down && y2 > y1) || (dir == :up && y2 < y1))
+    is_diagonal = x1 < x2 && ((is_downward && y2 > y1) || (!is_downward && y2 < y1))
 
     case is_single_step && is_diagonal do
-      true -> diagonalize(points, dir, [{x2, y2} | final])
-      false -> diagonalize(points, dir, final)
+      true -> diagonalize(points, is_downward, [{x2, y2} | final])
+      false -> diagonalize(points, is_downward, final)
     end
   end
 
@@ -54,9 +53,9 @@ defmodule Day do
       {:ok, body} ->
         String.split(body, "\n")
         |> Enum.map(fn line ->
-          String.split(line, " -> ")
-          |> Enum.map(&String.split(&1, ","))
-          |> Enum.map(fn point -> Enum.map(point, &String.to_integer/1) end)
+          String.split(line, [" -> ", ","])
+          |> Enum.map(&String.to_integer/1)
+          |> Enum.chunk_every(2)
           |> Enum.sort()
         end)
 
