@@ -31,17 +31,17 @@ defmodule Day do
       five = Enum.find(signal, fn s -> match(s, 5, split(six) -- [bottom_left]) end)
 
       Enum.map(output, fn o ->
-        cond do
-          o == one -> 1
-          o == two -> 2
-          o == three -> 3
-          o == four -> 4
-          o == five -> 5
-          o == six -> 6
-          o == seven -> 7
-          o == eight -> 8
-          o == nine -> 9
-          true -> 0
+        case o do
+          ^one -> 1
+          ^two -> 2
+          ^three -> 3
+          ^four -> 4
+          ^five -> 5
+          ^six -> 6
+          ^seven -> 7
+          ^eight -> 8
+          ^nine -> 9
+          _ -> 0
         end
       end)
       |> Enum.join()
