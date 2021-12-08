@@ -1,18 +1,18 @@
 defmodule Day do
-  def part1(fish) do
-    cycle_days(fish, 80)
+  def part1(ages) do
+    cycle_days(ages, 80)
   end
 
-  def part2(fish) do
-    cycle_days(fish, 256)
+  def part2(ages) do
+    cycle_days(ages, 256)
   end
 
-  def cycle_days(fish, 0), do: Enum.map(fish, fn {_age, count} -> count end) |> Enum.sum()
+  def cycle_days(ages, 0), do: Enum.map(ages, fn {_age, count} -> count end) |> Enum.sum()
 
-  def cycle_days(fish, days) do
-    num_new = Map.new(fish) |> Map.get(0, 0)
+  def cycle_days(ages, days) do
+    num_new = Map.new(ages) |> Map.get(0, 0)
 
-    Enum.map(fish, fn {age, count} ->
+    Enum.map(ages, fn {age, count} ->
       case age - 1 do
         6 -> {6, count + num_new}
         -1 -> {8, num_new}
