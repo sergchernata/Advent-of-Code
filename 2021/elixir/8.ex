@@ -31,8 +31,6 @@ defmodule Day do
       five = Enum.find(signal, fn s -> match(s, 5, split(six) -- [bottom_left]) end)
 
       Enum.map(output, fn o ->
-        o = normalize(o)
-
         cond do
           o == one -> 1
           o == two -> 2
