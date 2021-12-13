@@ -6,16 +6,12 @@ defmodule Day do
   end
 
   def part2([coordinates, folds]) do
-    grid = coordinates_to_grid(coordinates)
-
-    make_folds(grid, folds) |> Enum.map(&Enum.join(&1))
+    coordinates_to_grid(coordinates) |> make_folds(folds) |> Enum.map(&Enum.join(&1))
   end
 
   def make_folds(grid, []), do: grid
 
-  def make_folds(grid, [first_fold | folds]) do
-    fold(grid, first_fold) |> make_folds(folds)
-  end
+  def make_folds(grid, [first_fold | folds]), do: fold(grid, first_fold) |> make_folds(folds)
 
   def fold(grid, {axis, i}) do
     case axis do
@@ -31,9 +27,7 @@ defmodule Day do
         split = Enum.map(grid, fn row -> Enum.split(row, i) end)
         left = Enum.map(split, &elem(&1, 0))
         right = Enum.map(split, &(elem(&1, 1) |> Enum.drop(1) |> Enum.reverse()))
-        left_coordinates = grid_to_coordinates(left)
-        right_coordinates = grid_to_coordinates(right)
-        all_coordinates = left_coordinates ++ right_coordinates
+        all_coordinates = grid_to_coordinates(left) ++ grid_to_coordinates(right)
 
         Enum.uniq(all_coordinates) |> coordinates_to_grid()
     end
