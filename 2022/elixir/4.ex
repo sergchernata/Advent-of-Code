@@ -38,7 +38,7 @@ end
 
 input = Day.load("4.input.txt")
 
-# 
+# 503
 input |> Day.part1() |> IO.inspect()
-# 
+# 827
 input |> Day.part2() |> IO.inspect()
