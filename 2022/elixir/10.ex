@@ -24,18 +24,18 @@ defmodule Day do
     |> Enum.reduce({1, 0, []}, fn line, {signal, cycle, history} ->
       case line do
         ["noop"] ->
-          pixel = if cycle >= signal - 1 && cycle <= signal + 1, do: "#", else: "."
-          cycle = if cycle >= 39, do: -1, else: cycle
-          {signal, cycle + 1, history ++ [pixel]}
+          pixel = if cycle >= signal - 1 && cycle <= signal + 1, do: "#", else: " "
+          cycle = if cycle >= 39, do: 0, else: cycle + 1
+          {signal, cycle, history ++ [pixel]}
 
         [_, strength] ->
-          pixel1 = if cycle >= signal - 1 && cycle <= signal + 1, do: "#", else: "."
+          pixel1 = if cycle >= signal - 1 && cycle <= signal + 1, do: "#", else: " "
           cycle = if cycle >= 39, do: -1, else: cycle
 
           pixel2 =
             if cycle + 1 >= signal - 1 && cycle + 1 <= signal + 1,
               do: "#",
-              else: "."
+              else: " "
 
           cycle = if cycle + 2 >= 40, do: 0, else: cycle + 2
 
