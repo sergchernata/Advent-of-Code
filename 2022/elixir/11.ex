@@ -2,7 +2,6 @@ defmodule Day do
   def part1(input) do
     input
     |> simulate_rounds(20)
-    |> IO.inspect(charlists: :as_lists)
     |> Enum.map(&Map.get(&1, :count))
     |> Enum.sort()
     |> Enum.take(-2)
@@ -43,17 +42,19 @@ defmodule Day do
 
             target_monkey = Enum.at(monkeys, target_monkey_index)
 
-            current_monkey = Map.put(current_monkey, :items, [])
-
             target_monkey =
               target_monkey
               |> Map.put(:items, Map.get(target_monkey, :items) ++ [item])
-              |> Map.put(:count, Map.get(target_monkey, :count) + 1)
 
             monkeys
-            |> List.replace_at(current, current_monkey)
             |> List.replace_at(target_monkey_index, target_monkey)
           end)
+
+        current_monkey =
+          Map.put(current_monkey, :items, [])
+          |> Map.put(:count, current_monkey.count + length(items))
+
+        monkeys = List.replace_at(monkeys, current, current_monkey)
 
         do_round(monkeys, current + 1)
     end
@@ -72,8 +73,6 @@ defmodule Day do
             String.replace(items, "Starting items: ", "")
             |> String.split(", ")
             |> Enum.map(&String.to_integer(&1))
-
-          count = length(items)
 
           [operation, quant] =
             String.replace(operation, "Operation: new = old ", "") |> String.split(" ")
@@ -101,7 +100,7 @@ defmodule Day do
 
           %{
             items: items,
-            count: count,
+            count: 0,
             operation: operation,
             test: test,
             passed: passed,
@@ -117,7 +116,7 @@ end
 
 input = Day.load("11.input.txt")
 
-# 
+# 54253
 input |> Day.part1() |> IO.inspect()
 # 
 input |> Day.part2() |> IO.inspect()
